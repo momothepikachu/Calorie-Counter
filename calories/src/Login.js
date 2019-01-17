@@ -20,14 +20,19 @@ class Login extends Component {
       password: this.state.password
     }
     e.preventDefault();
-    firebase
+    firebase 
       .auth()
       .signInWithEmailAndPassword(
         registrationInfo.email,
         registrationInfo.password
       )
-      .then(()=>{
-        navigate('/meals')
+      .then((e)=>{
+        console.log(e.user.uid)
+        if(registrationInfo.email.toLowerCase()==='daseif7@gmail.com' || registrationInfo.email==='xrao@163.com'){
+          navigate('/manage')
+        }else{
+          navigate('/meals/'+e.user.uid)
+        }
       })
       .catch(error=>{
         if(error.message !== null){

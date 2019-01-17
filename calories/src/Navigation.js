@@ -14,6 +14,12 @@ class Navigation extends Component {
                     <FaCalculator className="mr-1" /> Calorie Counter
                 </Link>
                 <div className="navbar-nav ml-auto">
+                    {(user && this.props.manager) &&
+                    (
+                        <Link className="nav-item nav-link" to="/manage">
+                        Manage
+                        </Link>
+                    )}
                     {user && (
                         <Link className="nav-item nav-link" to="/settings">
                         Settings
