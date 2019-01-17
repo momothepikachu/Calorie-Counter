@@ -35,7 +35,7 @@ class Register extends Component {
         registrationInfo.password
       )
       .then(()=>{
-        this.props.registerUser(registrationInfo.displayName)
+        this.props.registerUser(registrationInfo)
       })
       .catch(error=>{
         if(error.message !== null){

@@ -41,6 +41,7 @@ class App extends Component {
               userName: users[user].userName,
               userEmail: users[user].userEmail,
               userID: user,
+              userPassword: users[user].userPassword,
               manager: users[user].manager,
             })
           }
@@ -56,30 +57,34 @@ class App extends Component {
     })
   }
 
-  registerUser=(userName)=>{
-    firebase.auth().onAuthStateChanged(FBUser => {
-      FBUser.updateProfile({
-        displayName: userName
-      })
+  registerUser=(registrationInfo)=>{
+    const FBUser = firebase.auth().currentUser;
+    FBUser.updateProfile({
+      displayName: registrationInfo.displayName
+    })
       .then(()=>{
+        console.log('profile upgradede?')
         const ref = firebase.database().ref(`users/${FBUser.uid}`)
         ref.set({
-          userName: userName,
+          userName: registrationInfo.displayName,
           userEmail: FBUser.email,
+          userPassword: registrationInfo.password,
           manager: false,
         })
         this.setState({
           user: FBUser,
-          displayName: FBUser.displayName,
+          displayName: registrationInfo.displayName,
           userID: FBUser.uid
         })
         if(FBUser.email==='daseif7@gmail.com' || FBUser.email==='xrao@163.com'){
           navigate('/manage')
         }else{
-          navigate('/meals')
+          navigate('/meals/'+FBUser.uid)
         }
       })
-    })
+      .catch(()=>{
+        console.log('fail to upgrade')
+      })
   } 
 
   generateMeals=(whichUser)=>{
@@ -112,9 +117,13 @@ class App extends Component {
       userID:  null,
       users: [],
       meals: [],
+      manager:false,
     })
     firebase.auth().signOut().then(()=>{
       navigate('/')
+      console.log('log out properly')
+    }).catch(()=>{
+      console.log('fail to log out')
     })
   }   
 
@@ -129,6 +138,7 @@ class App extends Component {
         {this.state.user && 
           <Welcome 
             userName={this.state.displayName}
+            logOutUser={this.logOutUser}
         />}     
         <Router>
           <Home path="/" 
@@ -138,7 +148,7 @@ class App extends Component {
           <Login path="/login" />
           <Manage path="/manage" 
             users={this.state.users}
-            currentUserID={this.state.userID}
+            currentUser={this.state.user}
             generateMeals={this.generateMeals}
             />
           <Settings path="/settings" />

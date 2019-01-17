@@ -27,7 +27,7 @@ class Login extends Component {
         registrationInfo.password
       )
       .then((e)=>{
-        console.log(e.user.uid)
+        console.log(e.user)
         if(registrationInfo.email.toLowerCase()==='daseif7@gmail.com' || registrationInfo.email==='xrao@163.com'){
           navigate('/manage')
         }else{

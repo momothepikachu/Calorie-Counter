@@ -11,7 +11,7 @@ class Manage extends Component {
 
                 <Accounts 
                     users={this.props.users}
-                    currentUserID={this.props.currentUserID}
+                    currentUser={this.props.currentUser}
                     generateMeals={this.props.generateMeals}
                 />
 
