@@ -7,31 +7,40 @@ import { FaEdit } from "react-icons/fa";
 
 class MealsList extends Component {
     state={
-        mealName: '',
-        mealCal:'',
-        mealDate: '',
-        mealTime: '',
+        mealInfo:{
+            mealName: '',
+            mealCal:'',
+            mealDate: '',
+            mealTime: '',
+        }
     }
     toggleModal=(e, name, cal, date, time)=>{
         e.preventDefault();
         this.setState({
-            mealName: name,
-            mealCal: cal,
-            mealDate: date,
-            mealTime: time,
+            mealInfo:{
+                mealName: name,
+                mealCal: cal,
+                mealDate: date,
+                mealTime: time,
+            }
         })
     }
     handleChange= (e) =>{
         const itemName = e.target.name;
         const itemValue = e.target.value;
-        this.setState({[itemName]: itemValue})
+        this.setState(prevState=>({
+            mealInfo:{
+                ...prevState.mealInfo,
+                [itemName]: itemValue
+            }
+        }))
     }     
     handleSubmit=(e, whichMeal)=>{
         e.preventDefault();
         const ref = firebase
             .database()
             .ref( `users/${this.props.userID}/meals/${whichMeal}/mealInfo`)
-        ref.set(this.state)
+        ref.set(this.state.mealInfo)
 
         $('#'+whichMeal+'Modal').modal('toggle');
     }
@@ -44,18 +53,18 @@ class MealsList extends Component {
     } 
 
     render(){
-        
-        const {meals} = this.props;
+        const {meals, greenDays, userBudget} = this.props;
         const myMeals = meals.map(item=>{
             return(
-                <tr key={item.mealID}>
+                <tr key={item.mealID} className={`text-white mb-2 ${greenDays[item.mealInfo.mealDate]<=userBudget? 'bg-success':'bg-danger'}`}>
                     <td className="py-2">{item.mealInfo.mealName}</td>
                     <td className="py-2">{item.mealInfo.mealCal}</td>
                     <td className="py-2">{item.mealInfo.mealDate}</td>
                     <td className="py-2">{item.mealInfo.mealTime}</td>
-                    <td className="py-2 btn-group border-top-0">
+                    <td className="py-2">
+                        <div className="btn-group">
                         <button 
-                            className="btn btn-sm btn-outline-secondary pt-0"
+                            className="btn btn-sm btn-outline-secondary btn-light pt-0"
                             data-toggle="modal"
                             data-target={'#'+item.mealID+'Modal'}
                             title="Edit Meal"
@@ -78,7 +87,7 @@ class MealsList extends Component {
                                                 <input 
                                                     className="form-control" 
                                                     type="text" 
-                                                    value={this.state.mealName} 
+                                                    value={this.state.mealInfo.mealName} 
                                                     id={item.mealID+'mealName'} 
                                                     name="mealName"
                                                     onChange={this.handleChange}
@@ -89,7 +98,7 @@ class MealsList extends Component {
                                                 <input 
                                                     className="form-control" 
                                                     type="number" 
-                                                    value={this.state.mealCal} 
+                                                    value={this.state.mealInfo.mealCal} 
                                                     id={item.mealID+'mealCal'} 
                                                     name="mealCal"
                                                     onChange={this.handleChange}/>
@@ -99,7 +108,7 @@ class MealsList extends Component {
                                                 <input 
                                                     className="form-control" 
                                                     type="date" 
-                                                    value={this.state.mealDate} 
+                                                    value={this.state.mealInfo.mealDate} 
                                                     id={item.mealID+'mealDate'}
                                                     name="mealDate"
                                                     onChange={this.handleChange}/>
@@ -109,7 +118,7 @@ class MealsList extends Component {
                                                 <input 
                                                     className="form-control" 
                                                     type="time" 
-                                                    value={this.state.mealTime} 
+                                                    value={this.state.mealInfo.mealTime} 
                                                     id={item.mealID+'mealTime'}
                                                     name="mealTime"
                                                     onChange={this.handleChange}/>
@@ -130,12 +139,14 @@ class MealsList extends Component {
 
 
                         <button 
-                            className="btn btn-sm btn-outline-secondary pt-0"
+                            className="btn btn-sm btn-outline-secondary btn-light pt-0"
                             title="Delete Meal"
                             onClick={e=>this.deleteMeal(e, item.mealID)}
                         >
                             <GoTrashcan />
-                        </button>                        
+                        </button>            
+                        </div>
+                                    
                     </td>                    
                 </tr>
             )
