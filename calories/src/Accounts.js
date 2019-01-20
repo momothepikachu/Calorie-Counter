@@ -158,14 +158,14 @@ class Accounts extends Component {
                                     className="btn btn-info mr-2"
                                     title="Edit User"
                                     data-toggle="modal"
-                                    data-target={'#'+item.userID+'Modal'}
+                                    data-target={'#'+'Modal'+item.userID}
                                     onClick={e=>this.toggleModal(e, item.userName,item.userEmail,item.userPassword)}
                                 >
                                     Edit
                                 </button>
 
                                 {/*Bootstrap Modal, used for editing regular user profile*/}
-                                <div className="modal fade" id={item.userID+'Modal'} tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div className="modal fade" id={'Modal'+item.userID} tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div className="modal-dialog modal-dialog-centered" role="document">
                                         <div className="modal-content">
                                             <div className="modal-header">
