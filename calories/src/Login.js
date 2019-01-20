@@ -3,17 +3,20 @@ import firebase from './Firebase'
 import FormError from './FormError'
 import {navigate} from '@reach/router'
 
+//the log in page
 class Login extends Component {
   state={
     email:'',
     password:'',
     errorMessage: null
   }
+  //update input box info to the state
   handleChange= (e) =>{
     const itemName = e.target.name;
     const itemValue = e.target.value;
     this.setState({[itemName]: itemValue})
   }
+  
   handleSubmit=(e)=>{
     const registrationInfo = {
       email: this.state.email,
@@ -29,7 +32,7 @@ class Login extends Component {
       .then((e)=>{
         console.log(e.user)
         if(registrationInfo.email.toLowerCase()==='daseif7@gmail.com' || registrationInfo.email==='xrao@163.com'){
-          navigate('/manage')
+          navigate('/manage/'+e.user.uid)
         }else{
           navigate('/meals/'+e.user.uid)
         }

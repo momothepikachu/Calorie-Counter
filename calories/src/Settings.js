@@ -89,18 +89,26 @@ class Settings extends Component {
         <div className="row justify-content-center">
           <div className="col-md-8 text-center">
             <div className="text-center mt-4">
-              <h2 className="text-primary">User Settings</h2><span className={`text-success font-weight-bold ${!this.state.updateDisplay && "d-none"}`} id="updateNotice">Updated!</span>
+              <h2 className="text-primary">User Settings</h2>
+              {this.state.updateDisplay? (
+                <div className="col-12 alert alert-success px-3">
+                  Updated!
+                </div>
+              ):null}
               <div className="card">
                 <div className="card-body">
                 { this.state.errorMessage !==null? (
                       <FormError theMessage={this.state.errorMessage} />): null}    
-                  <form onSubmit={this.handleSubmit}>
+                  <form className="text-left" onSubmit={this.handleSubmit}>
                     <div className="form-row justify-content-center">
-                      <div className="input-group col-sm-8">
+                      <div className="form-group col-sm-8">
+                        <label htmlFor="userBudget">Calorie Budget</label>
+                        <div className="input-group">
                           <input 
                             className="form-control" 
                             type="number" 
                             name="userBudget"
+                            id="userBudget"
                             value={this.state.userBudget}
                             onChange={this.handleChange}/>
                           <div className="input-group-append">
@@ -109,9 +117,13 @@ class Settings extends Component {
                             </button>
                           </div>                        
                         </div>                  
+                      </div>
                     </div>
+
                     <div className="form-row justify-content-center mt-3">
-                      <div className="input-group col-sm-8">
+                      <div className="form-group col-sm-8">
+                        <label htmlFor="userBudget">User Display Name</label>
+                        <div className="input-group">
                           <input 
                             className="form-control" 
                             type="text" 
@@ -123,10 +135,14 @@ class Settings extends Component {
                               <FaEdit />
                             </button>
                           </div>                        
-                        </div>                  
+                        </div>                           
+                      </div>
                     </div>
+
                     <div className="form-row justify-content-center mt-3">
-                      <div className="input-group col-sm-8">
+                      <div className="form-group col-sm-8">
+                        <label htmlFor="userBudget">User Email</label>
+                        <div className="input-group">
                           <input 
                             className="form-control" 
                             type="email" 
@@ -139,9 +155,13 @@ class Settings extends Component {
                             </button>
                           </div>                        
                         </div>                  
+                      </div>
                     </div>
+
                     <div className="form-row justify-content-center mt-3">
-                      <div className="input-group col-sm-8">
+                      <div className="form-group col-sm-8">
+                        <label htmlFor="userBudget">User Password</label>
+                        <div className="input-group">
                           <input 
                             className="form-control" 
                             type="password" 
@@ -154,6 +174,7 @@ class Settings extends Component {
                             </button>
                           </div>                        
                         </div>                  
+                      </div>
                     </div>
                   </form>
                 </div>

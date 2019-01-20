@@ -3,6 +3,7 @@ import firebase from './Firebase';
 
 import FormError from './FormError'
 
+//Register new user
 class Register extends Component {
   state={
     displayName:'',
@@ -11,17 +12,13 @@ class Register extends Component {
     passTwo:'',
     errorMessage: null
   }
+  //updates changes in the input boxes to the state 
   handleChange= (e) =>{
     const itemName = e.target.name;
     const itemValue = e.target.value;
-    this.setState({[itemName]: itemValue}, ()=>{
-      if(this.state.passOne!==this.state.passTwo){
-        this.setState({errorMessage: 'Passwords not match'})
-      } else {
-        this.setState({errorMessage: null})
-      }
-    })
+    this.setState({[itemName]: itemValue})
   }
+  //submit new user info to firebase auth
   handleSubmit=(e)=>{
     e.preventDefault();
     if(this.state.passOne===this.state.passTwo){
@@ -44,6 +41,8 @@ class Register extends Component {
           this.setState({errorMessage: null})
         }
       })
+    } else {
+      this.setState({errorMessage: 'Passwords not match'})
     }
   }
   render(){
@@ -56,6 +55,7 @@ class Register extends Component {
                 <div className="card-body">
                   <h3 className="font-weight-light mb-3">Register</h3>
                   <div className="form-row">
+                  {/*if there is an error during register, show this customized warning message */}
                     { this.state.errorMessage !==null? (
                       <FormError theMessage={this.state.errorMessage} />
                     ): null}

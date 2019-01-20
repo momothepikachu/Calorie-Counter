@@ -21,7 +21,7 @@ class Navigation extends Component {
                     <div className="navbar-nav ml-auto">
                         {(user && this.props.manager) &&
                         (
-                            <Link className="nav-item nav-link" to="/manage">
+                            <Link className="nav-item nav-link" to={`manage/${user.uid}`}>
                             Manage
                             </Link>
                         )}

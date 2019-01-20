@@ -5,6 +5,7 @@ import $ from 'jquery';
 import {GoTrashcan} from 'react-icons/go'
 import { FaEdit } from "react-icons/fa";
 
+//create a list of meals for current user
 class MealsList extends Component {
     state={
         mealInfo:{
@@ -14,6 +15,7 @@ class MealsList extends Component {
             mealTime: '',
         }
     }
+    //when toggle open the modal, save input date to the state
     toggleModal=(e, name, cal, date, time)=>{
         e.preventDefault();
         this.setState({
@@ -25,6 +27,7 @@ class MealsList extends Component {
             }
         })
     }
+    //update changes in the input box to the state
     handleChange= (e) =>{
         const itemName = e.target.name;
         const itemValue = e.target.value;
@@ -35,6 +38,7 @@ class MealsList extends Component {
             }
         }))
     }     
+    //update meal's info to firebase's database
     handleSubmit=(e, whichMeal)=>{
         e.preventDefault();
         const ref = firebase
@@ -44,6 +48,7 @@ class MealsList extends Component {
 
         $('#'+whichMeal+'Modal').modal('toggle');
     }
+    //delete a meal from the firebase database
     deleteMeal = (e, whichMeal)=>{
         e.preventDefault()
         const ref = firebase
@@ -78,9 +83,9 @@ class MealsList extends Component {
                             <div className="modal-dialog modal-dialog-centered" role="document">
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                        <h5 className="modal-title" id="exampleModalLongTitle">Edit your meal</h5>
+                                        <h5 className="modal-title" id="exampleModalLongTitle">Edit your meals</h5>
                                     </div>
-                                    <div className="modal-body">
+                                    <div className="modal-body text-left">
                                         <form id={item.mealID+'form'} onSubmit={e=>this.handleSubmit(e, item.mealID)}>
                                             <div className="form-group">
                                                 <label htmlFor={item.mealID+'mealName'}>Name</label>
@@ -88,8 +93,8 @@ class MealsList extends Component {
                                                     className="form-control" 
                                                     type="text" 
                                                     value={this.state.mealInfo.mealName} 
-                                                    id={item.mealID+'mealName'} 
                                                     name="mealName"
+                                                    id={item.mealID+'mealName'} 
                                                     onChange={this.handleChange}
                                                     />
                                             </div>
@@ -98,6 +103,7 @@ class MealsList extends Component {
                                                 <input 
                                                     className="form-control" 
                                                     type="number" 
+                                                    min="0"
                                                     value={this.state.mealInfo.mealCal} 
                                                     id={item.mealID+'mealCal'} 
                                                     name="mealCal"
@@ -136,7 +142,6 @@ class MealsList extends Component {
                                 </div>
                             </div>
                         </div>  
-
 
                         <button 
                             className="btn btn-sm btn-outline-secondary btn-light pt-0"

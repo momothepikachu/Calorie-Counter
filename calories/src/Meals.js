@@ -2,22 +2,37 @@ import React, {Component} from 'react';
 import firebase from './Firebase';
 
 import MealsList from './MealsList'
+import { MdAddCircleOutline } from "react-icons/md";
 import { FaCalendarAlt, FaRegClock, FaUtensils } from "react-icons/fa";
 
 
 class Meals extends Component {
   state={
-    startDate:'',
-    endDate:'',
-    startTime:'',
-    endTime:'',
     mealInfo:{
+      startDate:'',
+      endDate:'',
+      startTime:'',
+      endTime:'',      
       mealName: '',
       mealCal:'',
       mealDate: '',
       mealTime: '',
     }
   }
+  //
+  componentDidMount(){
+    this.props.generateMeals(this.props.userID, '','','','')
+    const {startDate, endDate, startTime, endTime} = this.state
+    if(startDate!=='' || endDate!=='' || startTime!=='' || endTime!==''){
+      this.setState({
+        startDate:'',
+        endDate:'',
+        startTime:'',
+        endTime:'',
+      })
+    }
+  }
+
   handleChange= (e) =>{
     const itemName = e.target.name;
     const itemValue = e.target.value;
@@ -62,150 +77,156 @@ class Meals extends Component {
       <div className="container mt-4">
         <div className="row justify-content-center">
           <div className="col-md-8 text-center">
-            <h2 className="font-weight-light">{mealsOwner.length && mealsOwner[0].userName}'s Meals</h2>
-            <div className="card bg-light">
-              <div className="card-body text-center p-3">
-                <form
-                  onSubmit={this.handleSubmit}
-                >
-                  <div className="form-row">
-                    <div className="col-sm-8 input-group">
-                      <input 
-                        className="form-control" 
-                        type="text" 
-                        placeholder="Meal name" 
-                        name="mealName"
-                        value={this.state.mealInfo.mealName}
-                        onChange={this.handleChange}
-                        required/>
-                      <div className="input-group-append">
-                        <span className="input-group-text bg-light">
-                          <FaUtensils />
-                        </span>
-                      </div>                        
-                    </div>
-                    <div className="col-sm-4 input-group mt-3 mt-sm-auto">
-                      <input
-                        type="number"
-                        className="form-control"
-                        name="mealCal"
-                        placeholder="100"
-                        value={this.state.mealInfo.mealCal}
-                        onChange={this.handleChange}
-                        required
-                      />
-                      <div className="input-group-append">
-                        <span className="input-group-text bg-light">Cals</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-row mt-3">
-                    <div className="col-6 input-group">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text bg-light">
-                          <FaCalendarAlt />
-                        </span>
-                      </div>                           
+            <h2 className="font-weight-light">{this.props.users.length>0 ? (mealsOwner[0] && mealsOwner[0].userName): (
+              this.props.currentUser && this.props.currentUser.displayName
+            )}'s Meals</h2>
+
+            <button className="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#collapseAddMeal" aria-expanded="false" aria-controls="collapseAddMeal">
+              <span><MdAddCircleOutline/></span> Add Meal
+            </button>
+            <div className="collapse" id="collapseAddMeal">
+              <div className="card bg-light mb-3">
+                <div className="card-body text-center p-3">
+                  <form
+                    onSubmit={this.handleSubmit}
+                  >
+                    <div className="form-row">
+                      <div className="col-sm-8 input-group">
                         <input 
                           className="form-control" 
-                          type="date" 
-                          placeholder="" 
-                          name="mealDate"
-                          value={this.state.mealInfo.mealDate}
+                          type="text" 
+                          placeholder="Meal name" 
+                          name="mealName"
+                          value={this.state.mealInfo.mealName}
                           onChange={this.handleChange}
-                          required/>                         
-                    </div>          
-                    <div className="col-6 input-group">
-                      <div className="input-group-prepend">
+                          required/>
+                        <div className="input-group-append">
                           <span className="input-group-text bg-light">
-                            <FaRegClock />
+                            <FaUtensils />
                           </span>
-                      </div>                         
-                      <input 
-                          className="form-control" 
-                          type="time" 
-                          placeholder="" 
-                          name="mealTime"
-                          value={this.state.mealInfo.mealTime}
+                        </div>                        
+                      </div>
+                      <div className="col-sm-4 input-group mt-3 mt-sm-auto">
+                        <input
+                          type="number"
+                          min="0"
+                          className="form-control"
+                          name="mealCal"
+                          placeholder="100"
+                          value={this.state.mealInfo.mealCal}
                           onChange={this.handleChange}
-                          required/>                         
-                    </div>                                    
-                  </div>
-                  <div className="form-row justify-content-end">
-                    <button
-                      type="submit"
-                      className="btn btn-info mt-3 align-content-end"
-                    >
-                      Add Meal
-                    </button>                     
-                  </div>                   
-                </form>
+                          required
+                        />
+                        <div className="input-group-append">
+                          <span className="input-group-text bg-light">Cals</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-row mt-3">
+                      <div className="col-6 input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text bg-light">
+                            <FaCalendarAlt />
+                          </span>
+                        </div>                           
+                          <input 
+                            className="form-control" 
+                            type="date" 
+                            placeholder="" 
+                            name="mealDate"
+                            value={this.state.mealInfo.mealDate}
+                            onChange={this.handleChange}
+                            required/>                         
+                      </div>          
+                      <div className="col-6 input-group">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text bg-light">
+                              <FaRegClock />
+                            </span>
+                        </div>                         
+                        <input 
+                            className="form-control" 
+                            type="time" 
+                            placeholder="" 
+                            name="mealTime"
+                            value={this.state.mealInfo.mealTime}
+                            onChange={this.handleChange}
+                            required/>                         
+                      </div>                                    
+                    </div>
+                    <div className="form-row justify-content-end">
+                      <button
+                        type="submit"
+                        className="btn btn-info mt-3 align-content-end"
+                      >
+                        Add Meal
+                      </button>                     
+                    </div>                   
+                  </form>
+                </div>
               </div>
             </div>
           </div>
           <div className="col col-md-8 text-center">
-            <div className="card border-top-0 rounded-0">
-              <div className="card-body row">
-                <form className="col-md-6" onSubmit={this.submitFilters}>
-                  <div className="form-row mb-3">
-                    <div className="form-group col-sm-6 text-left">
-                      <label className="font-weight-bolder" htmlFor="startDate">Start Date</label>
-                      <input 
-                        type="date" 
-                        id="startDate" 
-                        required 
-                        className="form-control"
-                        value={this.state.startDate}
-                        name="startDate"
-                        onChange={this.handleFilterChange}
-                      />      
-                    </div>
-                    <div className="form-group col-sm-6 text-left">
-                      <label className="font-weight-bolder" htmlFor="endDate">End Date</label>
-                      <input 
-                        type="date" 
-                        required 
-                        id="endDate" 
-                        className="form-control"
-                        value={this.state.endDate}
-                        name="endDate"
-                        onChange={this.handleFilterChange}
-                      />
-                    </div>
-                    <button className="btn btn-secondary">Filter Date</button>
-                  </div>
-                </form>
-                <form className="col-md-6" onSubmit={this.submitFilters}>
-                  <div className="form-row">
-                    <div className="form-group col-sm-6 text-left">
-                      <label className="font-weight-bolder" htmlFor="startTime">Start Time</label>
-                      <input 
-                        type="time" 
-                        id="startTime" 
-                        required 
-                        className="form-control"
-                        value={this.state.startTime}
-                        name="startTime"
-                        onChange={this.handleFilterChange}
-                      />      
-                    </div>
-                    <div className="form-group col-sm-6 text-left">
-                      <label className="font-weight-bolder" htmlFor="endtime">End Time</label>
-                      <input 
-                        type="time" 
-                        required 
-                        id="endtime" 
-                        className="form-control"
-                        value={this.state.endTime}
-                        name="endTime"
-                        onChange={this.handleFilterChange}
-                      />
-                    </div>
-                    <button className="btn btn-secondary">Filter Time</button>
-                  </div>
-                </form>
-              </div>
+            <div className="card rounded-0">
               {this.props.meals && this.props.meals.length? (
+                <div>
+                  <div className="card-body row">
+                    <form className="col-md-6" onSubmit={this.submitFilters}>
+                      <div className="form-row mb-3">
+                        <div className="form-group col-sm-6 text-left">
+                          <label className="font-weight-bolder" htmlFor="startDate">Start Date</label>
+                          <input 
+                            type="date" 
+                            id="startDate" 
+                            required 
+                            className="form-control"
+                            name="startDate"
+                            onChange={this.handleFilterChange}
+                          />      
+                        </div>
+                        <div className="form-group col-sm-6 text-left">
+                          <label className="font-weight-bolder" htmlFor="endDate">End Date</label>
+                          <input 
+                            type="date" 
+                            required 
+                            id="endDate" 
+                            className="form-control"
+                            name="endDate"
+                            onChange={this.handleFilterChange}
+                          />
+                        </div>
+                        <button className="btn btn-secondary">Filter Date</button>
+                      </div>
+                    </form>
+                    <form className="col-md-6" onSubmit={this.submitFilters}>
+                      <div className="form-row">
+                        <div className="form-group col-sm-6 text-left">
+                          <label className="font-weight-bolder" htmlFor="startTime">Start Time</label>
+                          <input 
+                            type="time" 
+                            id="startTime" 
+                            required 
+                            className="form-control"
+                            name="startTime"
+                            onChange={this.handleFilterChange}
+                          />      
+                        </div>
+                        <div className="form-group col-sm-6 text-left">
+                          <label className="font-weight-bolder" htmlFor="endtime">End Time</label>
+                          <input 
+                            type="time" 
+                            required 
+                            id="endtime" 
+                            className="form-control"
+                            name="endTime"
+                            onChange={this.handleFilterChange}
+                          />
+                        </div>
+                        <button className="btn btn-secondary">Filter Time</button>
+                      </div>
+                    </form>
+                  </div>                  
                   <table className="table table-sm card-body mb-0">
                     <thead>
                       <tr>
@@ -223,10 +244,12 @@ class Meals extends Component {
                         userBudget={this.props.userBudget}
                       />                      
                   </table>
+                </div>
               ) : null }
             </div>
           </div>
         </div>
+
       </div>
     )
   }

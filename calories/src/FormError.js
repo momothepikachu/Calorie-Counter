@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+//a custom alert box for errors
 class FormError extends Component {
     render(){
         const {theMessage} = this.props;

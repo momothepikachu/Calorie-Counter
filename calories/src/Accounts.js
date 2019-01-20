@@ -4,12 +4,19 @@ import $ from 'jquery';
 
 import {navigate} from '@reach/router'
 
+//this is a component for all users' accounts
 class Accounts extends Component {
+    state={
+        userName: '',
+        userEmail:'',
+        userPassword: '',
+    }
+    //handle clicks, direct admin to specific regular user's meal records
     handleClick=(whichUser)=>{
-        this.props.generateMeals(whichUser)
+        this.props.generateMeals(whichUser,'','','','')
         navigate('/meals/'+whichUser)               
     }
-
+    //allows manager/admin to delete specific regular user's account
     deleteUser=(e, whichUser)=>{
         e.preventDefault();
         const {users, currentUser} = this.props;
@@ -51,7 +58,7 @@ class Accounts extends Component {
             console.log('fail to logout')
         })   
     }
-
+    //allows manager/admin to edit specific regular user's profile
     editUser=(e, whichUser)=>{
         e.preventDefault();
         const {users, currentUser} = this.props;
@@ -110,11 +117,7 @@ class Accounts extends Component {
         })
         $('#'+whichUser.userID+'Modal').modal('toggle');          
     }
-    state={
-        userName: '',
-        userEmail:'',
-        userPassword: '',
-    }
+    //toggle the bootstrap modal
     toggleModal=(e, name, email, password)=>{
         e.preventDefault();
         this.setState({
@@ -123,6 +126,7 @@ class Accounts extends Component {
             userPassword: password,
         })
     }
+    //handle changes made in input boxes
     handleChange= (e) =>{
         const itemName = e.target.name;
         const itemValue = e.target.value;
@@ -131,21 +135,25 @@ class Accounts extends Component {
 
     render(){
         const {users, currentUser} = this.props;
+        {/*loops through all users, and creates a profile card for each of them*/}
         const myUsers = users.map(item=>{
             return(
                 <div className="card" key={item.userID}>
                     <div className="card-body text-left">
                         <h5 className="card-title">{item.userName}</h5>
                         <p className="card-text">{item.userEmail}</p>
+                        {/*check if this user is an user manager/admin, if yes then their profiles can't be edited; if they are not manager/admin, they are regular users and can be edited*/}
                         {item.manager? null:(
                             <div>
-                                {currentUser &&currentUser.email==="daseif7@gmail.com"? (<button 
-                                    className="btn btn-info mr-2"
-                                    title="Edit user's records"
-                                    onClick={e=>this.handleClick(item.userID)}
-                                >
-                                    Records
-                                </button>): null}
+                                {/*check if the current user is the Admin: daseif7@gmail.com; if yes, then give authorities to edit all users' meal records */}
+                                {currentUser && currentUser.email==="daseif7@gmail.com"? (
+                                    <button 
+                                        className="btn btn-info mr-2"
+                                        title="Edit user's records"
+                                        onClick={e=>this.handleClick(item.userID)}
+                                    >
+                                        Records
+                                    </button>): null}
                                 <button 
                                     className="btn btn-info mr-2"
                                     title="Edit User"
@@ -156,7 +164,7 @@ class Accounts extends Component {
                                     Edit
                                 </button>
 
-                                {/*Bootstrap Modal*/}
+                                {/*Bootstrap Modal, used for editing regular user profile*/}
                                 <div className="modal fade" id={item.userID+'Modal'} tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div className="modal-dialog modal-dialog-centered" role="document">
                                         <div className="modal-content">
@@ -197,11 +205,18 @@ class Accounts extends Component {
                                                             onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="modal-footer">
-                                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button 
+                                                            type="button" 
+                                                            className="btn btn-secondary" 
+                                                            data-dismiss="modal"
+                                                        >
+                                                            Close
+                                                        </button>
                                                         <button 
                                                             type="submit" 
                                                             className="btn btn-primary"
-                                                        >Save changes
+                                                        >
+                                                            Save changes
                                                         </button>
                                                     </div>                                            
                                                 </form>
@@ -209,6 +224,7 @@ class Accounts extends Component {
                                         </div>
                                     </div>
                                 </div>   
+                                {/* Bootstrap Modal ends*/}
 
                                 <button 
                                     className="btn btn-info mr-2"

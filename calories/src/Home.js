@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from '@reach/router'
 
+//home page 
 class Home extends Component {
-
     render(){
         const {user, manager} = this.props;
+        //customized style for the introduction paragraph
         const biggerLead = {
             fontSize: 1.4 + 'em',
             fontWeight: 200
@@ -20,6 +21,7 @@ class Home extends Component {
                         This simple app helps you watch your diets, allows people to check
                         in, add/edit/delete meals and check if you have exceeded your daily budget of calories.  
                         </p>
+                        {/*check if there is a signed-in user; if yes, show option to Add Meals for regular users, or Manage Accounts for manager/admin; if no, show options to register or Login*/}
                         {user == null? (
                             <span>
                                 <Link to="/register" className="btn btn-outline-primary mr-2">
@@ -31,8 +33,9 @@ class Home extends Component {
                             </span>
                         ): (
                             <span>
+                                {/*check if signed-in user is a regular user or manager/admin */}
                                 {manager?(
-                                    <Link to="/manage" className="btn btn-primary">
+                                    <Link to={`/manage/${user && user.uid}`} className="btn btn-primary">
                                         Manage Accounts
                                     </Link>
                                 ):(

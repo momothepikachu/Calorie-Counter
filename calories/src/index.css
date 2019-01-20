@@ -7,3 +7,7 @@ input,
   font-weight: 400;
   line-height: 110%;
 }
+
+.modal-content {
+  color: #000;
+}
