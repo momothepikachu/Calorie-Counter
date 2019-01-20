@@ -19,6 +19,10 @@ class Navigation extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <div className="navbar-nav ml-auto">
+                        {user && 
+                        (
+                            <li className="nav-item nav-link disabled text-success font-weight-bold">{user.displayName}</li>
+                        )}
                         {(user && this.props.manager) &&
                         (
                             <Link className="nav-item nav-link" to={`manage/${user.uid}`}>
@@ -37,17 +41,17 @@ class Navigation extends Component {
                         )}
                         {!user && (
                             <Link className="nav-item nav-link" to="/login">
-                            log in
+                            Log In
                             </Link>
                         )}
                         {!user && (
                             <Link className="nav-item nav-link" to="/register">
-                            register
+                            Register
                             </Link>
                         )}
                         {user && (
                             <Link className="nav-item nav-link" to="" onClick={e=>logOutUser(e)}>
-                            log out
+                            Log Out
                             </Link>
                         )}
                     </div>

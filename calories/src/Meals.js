@@ -80,6 +80,7 @@ class Meals extends Component {
             <h2 className="font-weight-light">{this.props.users.length>0 ? (mealsOwner[0] && mealsOwner[0].userName): (
               this.props.currentUser && this.props.currentUser.displayName
             )}'s Meals</h2>
+            {(this.props.meals && this.props.meals.length===0) && (<p className="text-info"><small>You don't have any meals yet.</small></p>)}
 
             <button className="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#collapseAddMeal" aria-expanded="false" aria-controls="collapseAddMeal">
               <span><MdAddCircleOutline/></span> Add Meal

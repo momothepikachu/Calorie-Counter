@@ -103,79 +103,55 @@ class Settings extends Component {
                     <div className="form-row justify-content-center">
                       <div className="form-group col-sm-8">
                         <label htmlFor="userBudget">Calorie Budget</label>
-                        <div className="input-group">
-                          <input 
-                            className="form-control" 
-                            type="number" 
-                            name="userBudget"
-                            id="userBudget"
-                            value={this.state.userBudget}
-                            onChange={this.handleChange}/>
-                          <div className="input-group-append">
-                            <button className="input-group-text btn">
-                              <FaEdit />
-                            </button>
-                          </div>                        
-                        </div>                  
+                        <input 
+                          className="form-control" 
+                          type="number" 
+                          name="userBudget"
+                          id="userBudget"
+                          value={this.state.userBudget}
+                          onChange={this.handleChange}/>      
                       </div>
                     </div>
 
                     <div className="form-row justify-content-center mt-3">
                       <div className="form-group col-sm-8">
                         <label htmlFor="userBudget">User Display Name</label>
-                        <div className="input-group">
+                        
                           <input 
                             className="form-control" 
                             type="text" 
                             name="userName"
                             value={this.state.userName}
-                            onChange={this.handleChange}/>
-                          <div className="input-group-append">
-                            <button className="input-group-text btn">
-                              <FaEdit />
-                            </button>
-                          </div>                        
-                        </div>                           
+                            onChange={this.handleChange}/>                          
                       </div>
                     </div>
 
                     <div className="form-row justify-content-center mt-3">
                       <div className="form-group col-sm-8">
                         <label htmlFor="userBudget">User Email</label>
-                        <div className="input-group">
                           <input 
                             className="form-control" 
                             type="email" 
                             name="userEmail"
                             value={this.state.userEmail}
-                            onChange={this.handleChange}/>
-                          <div className="input-group-append">
-                            <button className="input-group-text btn">
-                              <FaEdit />
-                            </button>
-                          </div>                        
-                        </div>                  
+                            onChange={this.handleChange}/> 
                       </div>
                     </div>
 
                     <div className="form-row justify-content-center mt-3">
                       <div className="form-group col-sm-8">
                         <label htmlFor="userBudget">User Password</label>
-                        <div className="input-group">
-                          <input 
-                            className="form-control" 
-                            type="password" 
-                            name="userPassword"
-                            value={this.state.userPassword}
-                            onChange={this.handleChange}/>
-                          <div className="input-group-append">
-                            <button className="input-group-text btn">
-                              <FaEdit />
-                            </button>
-                          </div>                        
-                        </div>                  
+                        <input 
+                          className="form-control" 
+                          type="password" 
+                          name="userPassword"
+                          value={this.state.userPassword}
+                          onChange={this.handleChange}/>                   
                       </div>
                     </div>
+                    <div className="form-row justify-content-center mt-3">
+                      <button className="btn btn-info" type="submit">Save</button>
+                    </div> 
                   </form>
                 </div>
               </div>

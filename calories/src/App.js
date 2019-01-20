@@ -3,7 +3,6 @@ import {Router, navigate} from '@reach/router'
 import firebase from './Firebase';
 
 import Home from './Home';
-import Welcome from './Welcome';
 import Navigation from './Navigation';
 import Login from './Login';
 import Settings from './Settings';
@@ -113,7 +112,7 @@ class App extends Component {
     this.setState({startDate, endDate, startTime, endTime}, ()=>{
       const mealsRef = firebase
         .database()
-        .ref('users/'+whichUser+'/meals');
+        .ref('users/'+whichUser+'/meals').orderByChild('mealInfo/mealDate').limitToLast(10);
       //listen for changes on current user's meals
       mealsRef.on('value', snapshot => {
         let meals = snapshot.val();
@@ -199,11 +198,7 @@ class App extends Component {
           user={this.state.user}
           logOutUser={this.logOutUser}
           manager={this.state.manager}
-        />          
-        {this.state.user && 
-          <Welcome 
-            user={this.state.user}
-        />}     
+        />              
         <Router>
           <Home path="/" 
             user={this.state.user}
