@@ -46,7 +46,7 @@ class MealsList extends Component {
             .ref( `users/${this.props.userID}/meals/${whichMeal}/mealInfo`)
         ref.set(this.state.mealInfo)
 
-        $('#'+whichMeal+'Modal').modal('toggle');
+        $('#'+'Modal'+whichMeal).modal('toggle');
     }
     //delete a meal from the firebase database
     deleteMeal = (e, whichMeal)=>{
@@ -71,7 +71,7 @@ class MealsList extends Component {
                         <button 
                             className="btn btn-sm btn-outline-secondary btn-light pt-0"
                             data-toggle="modal"
-                            data-target={'#'+item.mealID+'Modal'}
+                            data-target={'#'+'Modal'+item.mealID}
                             title="Edit Meal"
                             onClick={e=>this.toggleModal(e, item.mealInfo.mealName,item.mealInfo.mealCal,item.mealInfo.mealDate,item.mealInfo.mealTime)}
                         >
@@ -79,7 +79,7 @@ class MealsList extends Component {
                         </button>
 
                         {/*Bootstrap Modal*/}
-                        <div className="modal fade" id={item.mealID+'Modal'} tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div className="modal fade" id={'Modal'+item.mealID} tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div className="modal-dialog modal-dialog-centered" role="document">
                                 <div className="modal-content">
                                     <div className="modal-header">

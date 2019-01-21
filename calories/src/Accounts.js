@@ -115,7 +115,7 @@ class Accounts extends Component {
         }).catch(()=>{
             console.log('fail to logout')
         })
-        $('#'+whichUser.userID+'Modal').modal('toggle');          
+        $('#'+'Modal'+whichUser.userID).modal('toggle');          
     }
     //toggle the bootstrap modal
     toggleModal=(e, name, email, password)=>{
