@@ -1,4 +1,12 @@
-## Write an application for the input of calories
+# Calorie Counter
+
+This is an app that helps you count your daily calorie intake. Built with React and Firebase.
+
+## How to run
+
+Down this app and run 'npm install'
+
+## Requirements for the application:
 
  - User must be able to create an account and log in. (If a mobile application, this means that more users can use the app from the same phone).
  - When logged in, a user can see a list of his meals, also he should be able to add, edit and delete meals. (user enters calories manually, no auto calculations!)
