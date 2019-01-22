@@ -1,4 +1,4 @@
- # Calorie Counter
+# Calorie Counter
 
 This is an app that helps you count your daily calorie intake. Built with React and Firebase.
 
