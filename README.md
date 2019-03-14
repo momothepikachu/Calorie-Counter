@@ -17,6 +17,13 @@ This is an app that helps you count your daily calorie intake. Built with React 
 ## How to run
 
 - Download this app 
-- Go to folder 'calories', install all the dependencies and use npm: $ npm install
-- start running the app: $ npm start
+- Navigate to folder 'calories':
+```
+npm install
+```
+
+- start running the app: 
+```
+npm start
+```
 
