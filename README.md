@@ -22,7 +22,7 @@ This is an app that helps you count your daily calorie intake. Built with React 
 npm install
 ```
 
-- start running the app: 
+- Run the app: 
 ```
 npm start
 ```
